@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package>
+	<displayName>Smtp Mail Service</displayName>
+	<shortDescription>This package contains a mailer that uses a SMTP server to send mail.
+	The package is a wrapper around the Zend_Mail class of the Zend framework.</shortDescription>
+	<docUrl></docUrl>
+	<logo>logo.png</logo>
+	<doc>
+		<page title="Sending mails using the SMTP Mail Service" url="smtpmailservice.html" />
+	</doc>	
+	
+	<dependencies>
+		<dependency>
+			<group>utils/common</group>
+			<name>mouf_helpers</name>
+			<version>>=1.0</version>
+		</dependency>
+		<dependency>
+			<group>utils/mailer</group>
+			<name>mail-interface</name>
+			<version>>=1.0</version>
+		</dependency>
+		<dependency>
+			<group>utils/log</group>
+			<name>errorlog_logger</name>
+			<version>>=1.0</version>
+		</dependency>
+		<dependency>
+			<group>framework</group>
+			<name>zend</name>
+			<version>>=1.8.4-patch1</version>
+		</dependency>
+	</dependencies>
+	<requires>
+		<require>SmtpMailService.php</require>
+	</requires>
+	<adminRequires>
+		<require>controllers/SmtpMailServiceInstallController.php</require>
+		<require>SmtpMailServiceAdmin.php</require>
+	</adminRequires>
+	<install>
+		<url>mouf/smtpmailserviceinstall/</url>
+	</install>
+</package>
