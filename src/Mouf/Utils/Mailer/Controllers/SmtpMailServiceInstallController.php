@@ -1,5 +1,7 @@
-﻿<?php
+<?php
 namespace Mouf\Utils\Mailer\Controllers;
+
+use Mouf\Mvc\Splash\Controllers\Controller;
 
 /**
  * The controller managing the install process.
@@ -7,7 +9,7 @@ namespace Mouf\Utils\Mailer\Controllers;
  *
  * @Component
  */
-class SmtpMailServiceInstallController extends Controller  {
+class SmtpMailServiceInstallController extends Controller {
 	public $selfedit;
 	
 	/**

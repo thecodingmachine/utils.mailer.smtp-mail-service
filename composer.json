@@ -30,7 +30,13 @@
 			"require-admin": [
     			"src/SmtpMailServiceAdmin.php",
 				"src/Mouf/Utils/Mailer/Controllers/SmtpMailServiceInstallController.php"
-    		]
+    		],
+    		"install": [
+                {
+	                "type": "url",
+	                "url": "smtpmailserviceinstall/"
+                }
+            ]
 	    }
 	}
 }

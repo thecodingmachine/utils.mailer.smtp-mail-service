@@ -1,8 +1,5 @@
-﻿<?php
+<?php
 namespace Mouf\Utils\Mailer;
-
-require_once 'Zend/Mail.php';
-require_once 'Zend/Mail/Transport/Smtp.php';
 
 /**
  * This class sends mails using the Zend Framework SMTP mailer.<br/>
