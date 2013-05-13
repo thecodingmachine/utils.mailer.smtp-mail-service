@@ -115,11 +115,13 @@ class SmtpMailService implements MailServiceInterface {
 		if ($mail->getBodyText() != null) {
 			$text = new MimePart($mail->getBodyText());
 			$text->type = "text/plain";
+			$text->encoding = $mail->getEncoding();
 			$parts[]  = $text;
 		}
 		if ($mail->getBodyHtml() != null) {
 			$bodyHtml = new MimePart($mail->getBodyHtml());
-			$bodyHtml->type = "text/html";
+			$bodyHtml->type = "text/html;charset=".$mail->getEncoding();
+			$bodyHtml->encoding = $mail->getEncoding();
 			$parts[]  = $bodyHtml;
 		}
 		
@@ -182,6 +184,10 @@ class SmtpMailService implements MailServiceInterface {
 		$body = new MimeMessage();
 		$body->setParts($parts);
 		$zendMail->setBody($body);
+		
+		if ($mail->getBodyText() != null && $mail->getBodyHtml() != null) {
+			$zendMail->getHeaders()->get('content-type')->setType('multipart/alternative');
+		}
 
 		$this->zendMailTransport->send($zendMail);
 
