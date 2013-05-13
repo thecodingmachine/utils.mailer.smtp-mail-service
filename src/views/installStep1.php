@@ -11,8 +11,8 @@
 </ul>
 
 <form action="configure">
-	<button>Configure mail server</button>
+	<button class="btn btn-primary">Configure mail server</button>
 </form>
 <form action="skip">
-	<button>Skip</button>
+	<button class="btn btn-danger">Skip</button>
 </form>

@@ -17,7 +17,8 @@
     	"mouf/utils.common.mouf-helpers": "~2.0",
     	"mouf/utils.mailer.mail-interface": "~2.0",
     	"mouf/utils.log.errorlog_logger": "~2.0",
-		"zendframework/zend-mail": "~2.1@stable"
+		"zendframework/zend-mail": "~2.1@stable",
+		"zendframework/zend-eventmanager": "~2.1@stable"
     },
     "autoload": {
         "psr-0": {
@@ -34,7 +35,9 @@
     		"install": [
                 {
 	                "type": "url",
-	                "url": "smtpmailserviceinstall/"
+	                "url": "smtpmailserviceinstall/",
+	                "scope": "global",
+		    		"description": "Creates SMTP Mail Service instance"
                 }
             ]
 	    }

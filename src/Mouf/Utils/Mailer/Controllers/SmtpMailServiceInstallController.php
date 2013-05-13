@@ -1,7 +1,10 @@
 <?php
 namespace Mouf\Utils\Mailer\Controllers;
 
+use Mouf\Actions\InstallUtils;
+
 use Mouf\Mvc\Splash\Controllers\Controller;
+use Mouf\MoufManager;
 
 /**
  * The controller managing the install process.
@@ -29,6 +32,11 @@ class SmtpMailServiceInstallController extends Controller {
 	public $template;
 	
 	/**
+	 * @var HtmlBlock
+	 */
+	public $content;
+	
+	/**
 	 * Displays the first install screen.
 	 * 
 	 * @Action
@@ -44,8 +52,8 @@ class SmtpMailServiceInstallController extends Controller {
 			$this->moufManager = MoufManager::getMoufManagerHiddenInstance();
 		}
 				
-		$this->template->addContentFile(dirname(__FILE__)."/../../../../views/installStep1.php", $this);
-		$this->template->draw();
+		$this->content->addFile(dirname(__FILE__)."/../../../../views/installStep1.php", $this);
+		$this->template->toHtml();
 	}
 	
 	/**
@@ -87,8 +95,8 @@ class SmtpMailServiceInstallController extends Controller {
 		$this->password = "";
 		$this->loggerInstanceName = "errorLogLogger";
 				
-		$this->template->addContentFile(dirname(__FILE__)."/../../../../views/installStep2.php", $this);
-		$this->template->draw();
+		$this->content->addFile(dirname(__FILE__)."/../../../../views/installStep2.php", $this);
+		$this->template->toHtml();
 	}
 	
 	
@@ -137,7 +145,7 @@ class SmtpMailServiceInstallController extends Controller {
 		}
 		
 		if (!$moufManager->instanceExists("smtpMailService")) {
-			$moufManager->declareComponent("smtpMailService", "SmtpMailService");
+			$moufManager->declareComponent("smtpMailService", "Mouf\\Utils\\Mailer\\SmtpMailService");
 			$moufManager->setParameter("smtpMailService", "host", "MAIL_HOST", "config");
 			$moufManager->setParameter("smtpMailService", "port", "MAIL_PORT", "config");
 			$moufManager->setParameter("smtpMailService", "userName", "MAIL_USERNAME", "config");

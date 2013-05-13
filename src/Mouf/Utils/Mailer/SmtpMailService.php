@@ -1,6 +1,15 @@
 <?php
 namespace Mouf\Utils\Mailer;
 
+use Zend\Mail\Message;
+
+use Zend\Mail\Transport\SmtpOptions;
+
+use Zend\Mail\Transport\Smtp;
+
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
+
 /**
  * This class sends mails using the Zend Framework SMTP mailer.<br/>
  * <br/>
@@ -85,7 +94,7 @@ class SmtpMailService implements MailServiceInterface {
 	/**
 	 * The Zend mail transport.
 	 *
-	 * @var Zend_Mail_Transport_Smtp
+	 * @var Smtp
 	 */
 	private $zendMailTransport;
 	
@@ -97,14 +106,23 @@ class SmtpMailService implements MailServiceInterface {
 	public function send(MailInterface $mail) {
 		$this->initZendMailTransport();
 		
-		$zendMail = new Zend_Mail($mail->getEncoding());
+		$zendMail = new Message();
+		
+		$zendMail->setEncoding($mail->getEncoding());
 
+		$parts = array();
+		
 		if ($mail->getBodyText() != null) {
-			$zendMail->setBodyText($mail->getBodyText());
+			$text = new MimePart($mail->getBodyText());
+			$text->type = "text/plain";
+			$parts[]  = $text;
 		}
 		if ($mail->getBodyHtml() != null) {
-			$zendMail->setBodyHtml($mail->getBodyHtml());
+			$bodyHtml = new MimePart($mail->getBodyHtml());
+			$bodyHtml->type = "text/html";
+			$parts[]  = $bodyHtml;
 		}
+		
 		if ($mail->getFrom()) {
 			$zendMail->setFrom($mail->getFrom()->getMail(), $mail->getFrom()->getDisplayAs());
 		}
@@ -149,12 +167,23 @@ class SmtpMailService implements MailServiceInterface {
 				default:
 					throw new Exception("Invalid attachment disposition for mail. Should be one of: 'inline', 'attachment'");
 			}
-			$zendAttachment = $zendMail->createAttachment($attachment->getFileContent(), $attachment->getMimeType(), $attachment_disposition, $encoding, $attachment->getFileName());
-			$zendAttachment->id = $attachment->getContentId();
+			
+			$attachment = new MimePart($attachment->getFileContent());
+			$attachment->type = $attachment->getMimeType();
+			$attachment->disposition = $attachment_disposition;
+			$attachment->encoding = $encoding;
+			$attachment->filename = $attachment->getFileName();
+			$attachment->id = $attachment->getContentId();
+			
+			$parts[] = $attachment;
 		}
 		
 
-		$zendMail->send($this->zendMailTransport);
+		$body = new MimeMessage();
+		$body->setParts($parts);
+		$zendMail->setBody($body);
+
+		$this->zendMailTransport->send($zendMail);
 
 		// Let's log the mail:
 		$recipients = array_merge($mail->getToRecipients(), $mail->getCcRecipients(), $mail->getBccRecipients());
@@ -172,23 +201,32 @@ class SmtpMailService implements MailServiceInterface {
 		}
 		
 		$config = array();
+		if (!empty($this->host)) {
+			$config['name'] = $this->host;
+			$config['host'] = $this->host;
+		}
 		if (!empty($this->port)) {
 			$config['port'] = $this->port;
 		}
 		if (!empty($this->auth)) {
-			$config['auth'] = $this->auth;
+			$config['connection_class'] = $this->auth;
 		}
 		if (!empty($this->userName)) {
-			$config['username'] = $this->userName;
+			$config['connection_config']['username'] = $this->userName;
 		}
 		if (!empty($this->password)) {
-			$config['password'] = $this->password;
+			$config['connection_config']['password'] = $this->password;
 		}
 		if (!empty($this->ssl)) {
-			$config['ssl'] = $this->ssl;
+			$config['connection_config']['ssl'] = $this->ssl;
 		} 
 		
-		$this->zendMailTransport = new Zend_Mail_Transport_Smtp($this->host, $config);
+		
+		$this->zendMailTransport = new Smtp();
+		$options   = new SmtpOptions($config);
+
+		$this->zendMailTransport->setOptions($options);
+		
 	}
 }
 ?>
