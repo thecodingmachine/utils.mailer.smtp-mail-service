@@ -1,4 +1,4 @@
-<?php /* @var $this SmtpMailServiceInstallController */ ?>
+﻿<?php /* @var $this SmtpMailServiceInstallController */ ?>
 <script type="text/javascript" charset="utf-8">
 
 

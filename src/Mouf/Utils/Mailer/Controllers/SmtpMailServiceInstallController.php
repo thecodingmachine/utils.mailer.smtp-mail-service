@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 namespace Mouf\Utils\Mailer\Controllers;
 
 /**

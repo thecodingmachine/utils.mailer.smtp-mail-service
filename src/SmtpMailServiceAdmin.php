@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 use Mouf\MoufManager;
 
 // Controller declaration

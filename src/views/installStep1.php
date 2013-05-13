@@ -1,4 +1,4 @@
-<h1>Setting up your mail server</h1>
+﻿<h1>Setting up your mail server</h1>
 
 <p>You will need a mail server. This installation wizard will create a "smtpMailService" instance, and will add 6 config parameters:</p>
 <ul>

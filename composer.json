@@ -1,7 +1,6 @@
 {
     "name": "mouf/utils.mailer.smtp-mail-service",
-    "description": "This package contains a mailer that uses a SMTP server to send mail.
-	The package is a wrapper around the Zend_Mail class of the Zend framework.",
+    "description": "This package contains a mailer that uses a SMTP server to send mail. The package is a wrapper around the Zend_Mail class of the Zend framework.",
     "keywords": ["mouf", "mailer", "smtp", "mail", "service"],
     "homepage": "https://github.com/thecodingmachine/utils.mailer.smtp-mail-service",
     "type": "mouf-library",
