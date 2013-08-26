@@ -1,6 +1,8 @@
 <?php
 namespace Mouf\Utils\Mailer;
 
+use Mouf\Utils\Log\LogInterface;
+
 use Zend\Mail\Message;
 
 use Zend\Mail\Transport\SmtpOptions;
@@ -9,7 +11,6 @@ use Zend\Mail\Transport\Smtp;
 
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
-
 /**
  * This class sends mails using the Zend Framework SMTP mailer.<br/>
  * <br/>
