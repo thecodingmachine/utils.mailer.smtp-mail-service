@@ -94,9 +94,11 @@ class SmtpMailServiceInstallController extends Controller {
 		$this->user = "";
 		$this->password = "";
 		$this->loggerInstanceName = "errorLogLogger";
-				
+
+		ob_start();
 		$this->content->addFile(dirname(__FILE__)."/../../../../views/installStep2.php", $this);
 		$this->template->toHtml();
+		ob_end_flush();
 	}
 	
 	
