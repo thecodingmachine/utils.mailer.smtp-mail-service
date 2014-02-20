@@ -11,6 +11,7 @@ use Zend\Mail\Transport\Smtp;
 
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
+use Zend\Mime\Mime as ZendMail;
 /**
  * This class sends mails using the Zend Framework SMTP mailer.<br/>
  * <br/>
@@ -143,25 +144,25 @@ class SmtpMailService implements MailServiceInterface {
 			$encodingStr = $attachment->getEncoding();
 			switch ($encodingStr) {
 				case "ENCODING_7BIT":
-					$encoding = Zend_Mime::ENCODING_7BIT;
+					$encoding = ZendMime::ENCODING_7BIT;
 					break;
 				case "ENCODING_8BIT":
-					$encoding = Zend_Mime::ENCODING_8BIT;
+					$encoding = ZendMime::ENCODING_8BIT;
 					break;
 				case "ENCODING_QUOTEDPRINTABLE":
-					$encoding = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
+					$encoding = ZendMime::ENCODING_QUOTEDPRINTABLE;
 					break;
 				case "ENCODING_BASE64":
-					$encoding = Zend_Mime::ENCODING_BASE64;
+					$encoding = ZendMime::ENCODING_BASE64;
 					break;
 			}
 			$attachment_disposition = $attachment->getAttachmentDisposition();
 			switch ($attachment_disposition) {
 				case "inline":
-					$attachment_disposition = Zend_Mime::DISPOSITION_INLINE;
+					$attachment_disposition = ZendMime::DISPOSITION_INLINE;
 					break;
 				case "attachment":
-					$attachment_disposition = Zend_Mime::DISPOSITION_ATTACHMENT;
+					$attachment_disposition = ZendMime::DISPOSITION_ATTACHMENT;
 					break;
 				case "":
 				case null:
@@ -171,14 +172,14 @@ class SmtpMailService implements MailServiceInterface {
 					throw new Exception("Invalid attachment disposition for mail. Should be one of: 'inline', 'attachment'");
 			}
 			
-			$attachment = new MimePart($attachment->getFileContent());
-			$attachment->type = $attachment->getMimeType();
-			$attachment->disposition = $attachment_disposition;
-			$attachment->encoding = $encoding;
-			$attachment->filename = $attachment->getFileName();
-			$attachment->id = $attachment->getContentId();
+			$mimePart = new MimePart($attachment->getFileContent());
+			$mimePart->type = $attachment->getMimeType();
+			$mimePart->disposition = $attachment_disposition;
+			$mimePart->encoding = $encoding;
+			$mimePart->filename = $attachment->getFileName();
+			$mimePart->id = $attachment->getContentId();
 			
-			$parts[] = $attachment;
+			$parts[] = $mimePart;
 		}
 		
 
