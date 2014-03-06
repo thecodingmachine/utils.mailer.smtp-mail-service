@@ -11,7 +11,7 @@ use Zend\Mail\Transport\Smtp;
 
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
-use Zend\Mime\Mime as ZendMail;
+use Zend\Mime\Mime as ZendMime;
 /**
  * This class sends mails using the Zend Framework SMTP mailer.<br/>
  * <br/>
